@@ -11,7 +11,7 @@
 
 constexpr int g_output_size = 1;
 
-typedef int (*NSAdapterResponseBeginT)();
+typedef int (*NSAdapterResponseBeginT)(const char*);
 typedef int (*NSAdapterResponseAddInputT)(double);
 typedef int (*NSAdapterResponseCallT)();
 typedef double (*NSAdapterResponseGetOutputT)(int);
@@ -61,7 +61,7 @@ Lib::~Lib()
 
 int main()
 {
-	Lib lib("SANNDll.dll");
+	Lib lib("SANNWrapper.dll");
 
 	std::vector<double> values;
 
@@ -77,7 +77,30 @@ int main()
 		std::wistringstream strm(str);
 		std::copy_n(std::istream_iterator<double, wchar_t>(strm), values.size(), std::begin(values));
 
-		(*lib.NSAdapterResponseBegin)();
+		//----
+
+		(*lib.NSAdapterResponseBegin)("..\\..\\sources\\dlls\\SANN_C_Code_brentD-1.dll");
+
+		for (int i = 0; i < values.size() - 4; ++i)
+		{
+			(*lib.NSAdapterResponseAddInput)(values[i]);
+		}
+
+		(*lib.NSAdapterResponseCall)();
+
+		for (int i = 0; i < values.size(); ++i)
+		{
+			std::wcout << values[i] << L'\t';
+		}
+		for (int i = 0; i < g_output_size; ++i)
+		{
+			std::wcout << (*lib.NSAdapterResponseGetOutput)(i) << L'\t';
+		}
+		std::wcout << std::endl;
+
+		//----
+
+		(*lib.NSAdapterResponseBegin)("..\\..\\sources\\dlls\\SANN_C_Code_brentD-6");
 
 		for (int i = 0; i < values.size() - 4; ++i)
 		{

@@ -2,7 +2,7 @@
 #include "WrappedLib.h"
 #include <string>
 
-WrappedLib::WrappedLib(const char* filename)
+WrappedLib::WrappedLib(const char* filename) : lib_(nullptr)
 {
 	lib_ = ::LoadLibraryA(filename);
 	if (!lib_)
@@ -26,6 +26,7 @@ WrappedLib::~WrappedLib()
 {
 	if (lib_)
 	{
-		::CloseHandle(lib_);
+		::FreeLibrary(lib_);
+		lib_ = nullptr;
 	}
 }

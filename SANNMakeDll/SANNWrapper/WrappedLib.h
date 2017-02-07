@@ -17,6 +17,7 @@ public:
 	WrappedLib(WrappedLib&&) = delete;
 	WrappedLib& operator =(WrappedLib&&) = delete;
 
+public:
 	NSAdapterResponseBeginT NSAdapterResponseBegin = nullptr;
 	NSAdapterResponseAddInputT NSAdapterResponseAddInput = nullptr;
 	NSAdapterResponseCallT NSAdapterResponseCall = nullptr;

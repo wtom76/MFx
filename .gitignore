@@ -20,3 +20,5 @@ SANNMakeDll/SANNDll/sann.cpp
 *.exe
 /SANNMakeDll/x64/Debug
 /SANNMakeDll/x64/Release
+Debug
+/SANNMakeDll/test.txt
